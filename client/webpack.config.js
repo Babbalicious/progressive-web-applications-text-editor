@@ -22,8 +22,33 @@ module.exports = () => {
         template: './index.html',
         title: 'Webpack Plugin',
       }),
+      // Injects our custom service worker
+      new InjectManifest({
+        swSrc: './src-sw.js',
+        swDest: 'src-sw.js',
+      }),
       new MiniCssExtractPlugin(),
-      new WorkboxPlugin.GenerateSW()
+      new WorkboxPlugin.GenerateSW(),
+      
+      // Creates a manifest.json file.
+      new WebpackPwaManifest({
+        fingerprints: false,
+        inject: true,
+        name: 'Contact Cards',
+        short_name: 'Contact',
+        description: 'Never forget your contacts!',
+        background_color: '#225ca3',
+        theme_color: '#225ca3',
+        start_url: './',
+        publicPath: './',
+        icons: [
+          {
+            src: path.resolve('src/images/logo.png'),
+            sizes: [96, 128, 192, 256, 384, 512],
+            destination: path.join('assets', 'icons'),
+          },
+        ],
+      }),
     ],
 
     module: {
