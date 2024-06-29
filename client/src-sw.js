@@ -44,3 +44,22 @@ registerRoute(
 offlineFallback({
   pageFallback: "/offline.html",
 });
+
+// Enhanced error handling and logging
+self.addEventListener("install", (event) => {
+  event.waitUntil(
+    caches.open("static-resources").then((cache) => {
+      return cache
+        .addAll([
+          "/index.html",
+          "/styles.css",
+          "/script.js",
+          // Add other URLs here
+        ])
+        .catch((error) => {
+          console.error("Failed to cache:", error);
+          throw error;
+        });
+    })
+  );
+});

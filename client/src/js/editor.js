@@ -22,12 +22,35 @@ export default class {
       tabSize: 2,
     });
 
+    // Function to ensure the value is a string
+    const ensureString = (value) => {
+      return typeof value === "string" ? value : String(value);
+    };
+
     // When the editor is ready, set the value to whatever is stored in indexeddb.
     // Fall back to localStorage if nothing is stored in indexeddb, and if neither is available, set the value to header.
-    getDb().then((data) => {
-      console.info("Loaded data from IndexedDB, injecting into editor");
-      this.editor.setValue(data || localData || header);
-    });
+    // getDb().then((data) => {
+    //   console.info("Loaded data from IndexedDB, injecting into editor");
+    //   this.editor.setValue(data || localData || header);
+    // });
+
+    getDb()
+      .then((data) => {
+        console.info("Loaded data from IndexedDB, injecting into editor");
+        const value = ensureString(
+          data && data[0] && data[0].content
+            ? data[0].content
+            : localData || header
+        );
+        console.log("Setting editor value to:", value);
+        this.editor.setValue(value);
+      })
+      .catch((error) => {
+        console.error("Error loading data from IndexedDB:", error);
+        const value = ensureString(localData || header);
+        console.log("Setting editor value to:", value);
+        this.editor.setValue(value);
+      });
 
     this.editor.on("change", () => {
       localStorage.setItem("content", this.editor.getValue());
