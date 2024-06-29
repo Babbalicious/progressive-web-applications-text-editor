@@ -1,4 +1,4 @@
-# progressive-web-applications-text-editor
+# Progressive Web Applications (PWA) Text Editor
 
 ## **Description**
 
