@@ -6,6 +6,8 @@ A simple text editor that runs in the browser and meets the PWA criteria. The ap
 
 It was built with: JavaScript, Node.js, Express.js, Concurrently, IndexedDB, Webpack and Workbox.
 
+### [Click Here to View Application](https://progressive-web-applications-text-editor.onrender.com)
+
 ## Installation
 
 Users can access the Progressive Web Applications (PWA) Text Editor in the browser. If users would like to install the application they can click the `Install` button located in the application.
